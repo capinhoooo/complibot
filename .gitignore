@@ -1,0 +1,67 @@
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+web/.output/
+web/.tanstack/
+contract/cache/
+contract/out/
+contract/broadcast/
+
+# Lock files
+web/bun.lock
+backend/bun.lockb
+backend/package-lock.json
+
+# IDE
+.vscode/
+.idea/
+
+# Claude
+.claude/
+memory/
+
+# Misc
+.DS_Store
+*.log
+web/.mcp.json
+web/.cta.json
+packages/
+*.git_bak
+*.git_contract_bak
+contract/.git_contract_bak/
+
+# Web excludes
+web/DESIGN.md
+web/FRONTEND_STRUCTURE_GUIDE.md
+web/RESEARCH.md
+web/REVIEW.md
+web/progress.md
+web/CLAUDE.md
+web/.prettierignore
+
+# Backend excludes
+backend/CLAUDE.md
+backend/.env.example
+backend/.vscode/
+
+# Root level excludes
+env.example.txt
+COMPLIBOT.md
+PITCHDECK.md
+SCRIPT.md
+00_index.md
+01_hackathon_details.md
+02_past_winners.md
+03_technical_guide.md
+04_ecosystem_strategy.md
+05_winning_ideas.md
+06_complibot_frontend_demo.md
+07_complibot_execution_playbook.md
+complitbotWebTask.md
+bun.lock
