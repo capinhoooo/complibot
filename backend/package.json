@@ -1,0 +1,48 @@
+{
+  "name": "complibot-backend",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "type": "module",
+  "scripts": {
+    "start": "bun index.ts",
+    "dev": "bun --watch index.ts",
+    "lint": "eslint . --ext .ts",
+    "typecheck": "tsc --noEmit",
+    "db:push": "bunx prisma db push --config prisma/prisma.config.ts && bunx prisma generate --config prisma/prisma.config.ts",
+    "db:pull": "bunx prisma db pull --config prisma/prisma.config.ts",
+    "db:generate": "bunx prisma generate --config prisma/prisma.config.ts",
+    "db:migrate": "bunx prisma migrate dev --name init --config prisma/prisma.config.ts",
+    "ingest": "bun run scripts/ingest.ts",
+    "register-schema": "bun run scripts/register-schema.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "CompliBot backend API for smart contract compliance",
+  "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.0",
+    "@ai-sdk/google": "^3.0.58",
+    "@ai-sdk/groq": "^3.0.0",
+    "@ai-sdk/openai": "^3.0.0",
+    "@fastify/cors": "^11.0.0",
+    "@fastify/rate-limit": "^10.0.0",
+    "@prisma/adapter-pg": "^7.0.0",
+    "@prisma/client": "^7.0.0",
+    "ai": "^6.0.0",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.8.0",
+    "pg": "^8.13.0",
+    "pino-pretty": "^13.0.0",
+    "viem": "^2.21.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^22.10.10",
+    "@types/pg": "^8.11.0",
+    "bun-types": "latest",
+    "eslint": "^8.57.0",
+    "prisma": "^7.0.0",
+    "typescript": "^5.7.3"
+  }
+}
