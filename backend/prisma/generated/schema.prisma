@@ -1,0 +1,79 @@
+// CompliBot Prisma Schema
+// PostgreSQL with pgvector extension for RAG knowledge base
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+  output          = "./generated"
+}
+
+datasource db {
+  provider   = "postgresql"
+  extensions = [pgvector(map: "vector", schema: "public")]
+}
+
+model AuditSession {
+  id            String   @id @default(cuid())
+  // Wallet of the developer who ran the audit. Nullable because audits may be
+  // run before connecting a wallet; populated on certify-eligible flows so the
+  // certify route can attach the on-chain attestation to the correct identity.
+  walletAddress String?
+  code          String   @db.Text
+  contractName  String?
+  findings      Json // AuditFinding[] + summary metadata (severity counts, top recommendation)
+  score         Int // 0-100
+  verdict       String // "PASS" | "FAIL" | "CONDITIONAL"
+  auditHash     String? // keccak256 of code + findings for on-chain reference
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  certificate ComplianceCertificate?
+  messages    ChatMessage[]
+
+  @@index([createdAt])
+  @@index([walletAddress])
+}
+
+model ComplianceCertificate {
+  id               String   @id @default(cuid())
+  attestationUid   String   @unique
+  txHash           String
+  schemaUid        String
+  contractAddress  String
+  developerAddress String
+  score            Int
+  findings         Json // { critical: 0, high: 0, medium: 2, low: 1 }
+  explorerUrl      String
+  createdAt        DateTime @default(now())
+
+  auditSessionId String       @unique
+  auditSession   AuditSession @relation(fields: [auditSessionId], references: [id])
+
+  @@index([developerAddress])
+  @@index([contractAddress])
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  sessionId String
+  role      String // "user" | "assistant"
+  content   String   @db.Text
+  sources   Json? // SourceCitation[] | null
+  createdAt DateTime @default(now())
+
+  auditSession AuditSession? @relation(fields: [sessionId], references: [id])
+
+  @@index([sessionId, createdAt])
+}
+
+model KnowledgeChunk {
+  id        String                     @id @default(cuid())
+  content   String                     @db.Text
+  embedding Unsupported("vector(768)")
+  source    String // file path: "regulations/fatf_travel_rule.md"
+  category  String // "regulation" | "pattern" | "template" | "hashkey"
+  metadata  Json? // { title, section, ... }
+  createdAt DateTime                   @default(now())
+
+  @@index([category])
+}
