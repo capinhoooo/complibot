@@ -1,0 +1,141 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@rainbow-me/rainbowkit/styles.css";
+
+@layer theme, base, components, utilities;
+
+@plugin '../hero.ts';
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* === Linear surfaces === */
+  --color-bg-marketing: #08090a;
+  --color-bg-panel: #0f1011;
+  --color-bg-surface: #191a1b;
+  --color-bg-elevated: #28282c;
+
+  /* === Linear text === */
+  --color-fg-primary: #f7f8f8;
+  --color-fg-secondary: #d0d6e0;
+  --color-fg-tertiary: #8a8f98;
+  --color-fg-quaternary: #62666d;
+
+  /* === Brand === */
+  --color-brand-indigo: #5e6ad2;
+  --color-brand-violet: #7170ff;
+  --color-brand-violet-hover: #828fff;
+  --color-brand-lavender: #7a7fad;
+
+  /* === Status === */
+  --color-success: #10b981;
+  --color-success-strong: #27a644;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+
+  /* === Borders === */
+  --color-border-subtle: rgba(255, 255, 255, 0.05);
+  --color-border-standard: rgba(255, 255, 255, 0.08);
+  --color-border-solid: #23252a;
+  --color-line-tint: #141516;
+
+  /* === Type === */
+  --font-sans: "Inter Variable", -apple-system, "SF Pro Display", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Berkeley Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Linear type scale */
+  --text-display-xl: 4.5rem;
+  --text-display-l: 4rem;
+  --text-display: 3rem;
+  --text-h1: 2rem;
+  --text-h2: 1.5rem;
+  --text-h3: 1.25rem;
+  --text-body-l: 1.125rem;
+  --text-body: 1rem;
+  --text-small: 0.9375rem;
+  --text-caption: 0.8125rem;
+  --text-label: 0.75rem;
+  --text-micro: 0.6875rem;
+
+  /* Linear letter-spacing scale */
+  --tracking-display-xl: -1.584px;
+  --tracking-display-l: -1.408px;
+  --tracking-display: -1.056px;
+  --tracking-h1: -0.704px;
+  --tracking-h2: -0.288px;
+  --tracking-h3: -0.24px;
+  --tracking-body-l: -0.165px;
+  --tracking-small: -0.165px;
+  --tracking-caption: -0.13px;
+  --tracking-large-cap: -0.182px;
+  --tracking-tiny: -0.15px;
+
+  /* Radii */
+  --radius-micro: 2px;
+  --radius-standard: 4px;
+  --radius-comfortable: 6px;
+  --radius-card: 8px;
+  --radius-panel: 12px;
+  --radius-large: 22px;
+  --radius-pill: 9999px;
+}
+
+/* Global type baseline — Linear's signature */
+html {
+  font-family: var(--font-sans);
+  font-feature-settings: "cv01", "ss03";
+  font-weight: 400;
+  background: var(--color-bg-marketing);
+  color: var(--color-fg-primary);
+}
+
+body {
+  font-feature-settings: "cv01", "ss03";
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+}
+
+html.dark {
+  background: var(--color-bg-marketing);
+  color: var(--color-fg-primary);
+}
+
+strong,
+b,
+.ui-emphasis {
+  font-weight: 510;
+}
+
+/* Scrollbar styling — subtle to match Linear palette */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f1011;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #28282c;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3e3e44;
+}
+
+::selection {
+  background: rgba(94, 106, 210, 0.35);
+  color: #f7f8f8;
+}
+
+/* Focus ring utility for keyboard nav */
+@layer utilities {
+  .focus-ring {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(113, 112, 255, 0.45);
+  }
+}
