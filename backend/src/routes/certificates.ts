@@ -20,7 +20,12 @@ export async function certificatesRoutes(app: FastifyInstance) {
 
     try {
       const certificates = await prisma.complianceCertificate.findMany({
-        where: { developerAddress: address.toLowerCase() },
+        where: {
+          developerAddress: {
+            equals: address,
+            mode: 'insensitive',
+          },
+        },
         orderBy: { createdAt: 'desc' },
         take: 50, // Paginate: never return unbounded results
         select: {
