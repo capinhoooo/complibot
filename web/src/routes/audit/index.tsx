@@ -504,12 +504,12 @@ function LoadingPanel({ labelText }: { labelText: string }) {
 }
 
 function VerdictBadge({ verdict }: { verdict: AuditResponse['verdict'] }) {
-  const map: Record<AuditResponse['verdict'], { label: string; color: string; bg: string }> = {
-    compliant: { label: 'Compliant', color: '#10b981', bg: 'rgba(16,185,129,0.1)' },
-    needs_review: { label: 'Needs review', color: '#f59e0b', bg: 'rgba(245,158,11,0.1)' },
-    non_compliant: { label: 'Non-compliant', color: '#ef4444', bg: 'rgba(239,68,68,0.1)' },
+  const map: Record<string, { label: string; color: string; bg: string }> = {
+    PASS: { label: 'Compliant', color: '#10b981', bg: 'rgba(16,185,129,0.1)' },
+    CONDITIONAL: { label: 'Needs review', color: '#f59e0b', bg: 'rgba(245,158,11,0.1)' },
+    FAIL: { label: 'Non-compliant', color: '#ef4444', bg: 'rgba(239,68,68,0.1)' },
   }
-  const { label, color, bg } = map[verdict]
+  const { label, color, bg } = map[verdict] ?? { label: verdict, color: '#8a8f98', bg: 'rgba(138,143,152,0.1)' }
   return (
     <span
       className="inline-flex items-center rounded-full px-2 py-0.5 text-[12px] font-medium"
