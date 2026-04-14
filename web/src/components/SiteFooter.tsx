@@ -18,11 +18,9 @@ export default function SiteFooter() {
           >
             <img
               src="/assets/compli-logo.svg"
-              alt=""
-              aria-hidden
-              className="h-5 w-5"
+              alt="CompliBot"
+              className="h-24 w-24"
             />
-            CompliBot
           </Link>
           <p className="max-w-xs text-[13px] leading-relaxed text-[#8a8f98]">
             Ship compliant DeFi on HashKey Chain. Ask, audit, and prove

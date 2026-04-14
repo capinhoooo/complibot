@@ -67,11 +67,9 @@ export default function SiteHeader() {
           >
             <img
               src="/assets/compli-logo.svg"
-              alt=""
-              aria-hidden
-              className="h-5 w-5"
+              alt="CompliBot"
+              className="h-24 w-24"
             />
-            CompliBot
           </Link>
         </NavbarBrand>
       </NavbarContent>
