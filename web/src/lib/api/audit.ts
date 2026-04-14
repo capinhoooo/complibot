@@ -18,7 +18,7 @@ const FindingSchema = z.object({
 const AuditResponseSchema = z.object({
   auditSessionId: z.string().min(1),
   score: z.number().min(0).max(100),
-  verdict: z.enum(['compliant', 'needs_review', 'non_compliant']),
+  verdict: z.string(),
   findingsSummary: z.object({
     critical: z.number(),
     high: z.number(),
