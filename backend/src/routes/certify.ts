@@ -68,7 +68,13 @@ export async function certifyRoutes(app: FastifyInstance) {
       // Use SERVER-SIDE score from the audit session, not the client-supplied value.
       // The client can submit a manipulated complianceScore; the DB record is authoritative.
       const serverScore = session.score;
-      const serverFindings = session.findings as { critical: number; high: number; medium: number; low: number };
+      const rawFindings = session.findings as { findings?: unknown[]; summary?: { critical?: number; high?: number; medium?: number; low?: number }; critical?: number; high?: number; medium?: number; low?: number };
+      const serverFindings = {
+        critical: rawFindings.summary?.critical ?? rawFindings.critical ?? 0,
+        high: rawFindings.summary?.high ?? rawFindings.high ?? 0,
+        medium: rawFindings.summary?.medium ?? rawFindings.medium ?? 0,
+        low: rawFindings.summary?.low ?? rawFindings.low ?? 0,
+      };
 
       if (serverScore < 70) {
         return reply.status(400).send({ error: 'Compliance score below threshold (70)' });
