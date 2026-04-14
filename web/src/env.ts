@@ -27,7 +27,7 @@ export const env = createEnv({
     VITE_TESTNET_EXPLORER_URL: z
       .string()
       .url()
-      .default('https://hashkeychain-testnet-explorer.alt.technology'),
+      .default('https://testnet-explorer.hsk.xyz'),
     VITE_MAINNET_EXPLORER_URL: z
       .string()
       .url()
