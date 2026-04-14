@@ -726,7 +726,6 @@ function CertifyButton({
       isDisabled={isCertifying}
       isLoading={isCertifying}
       spinner={<Loader2 className="h-4 w-4 animate-spin" />}
-      startContent={!isCertifying && <Shield className="h-4 w-4" />}
       className="w-full bg-[#5e6ad2] text-[14px] font-medium text-white"
     >
       {isCertifying ? 'Signing…' : 'Issue Certificate'}

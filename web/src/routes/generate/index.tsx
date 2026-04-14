@@ -83,7 +83,6 @@ function GeneratePage() {
       <div className="flex flex-col border-b border-[rgba(255,255,255,0.08)] md:w-[55%] md:border-b-0 md:border-r">
         <div className="flex items-center justify-between border-b border-[rgba(255,255,255,0.08)] px-4 py-3">
           <div className="flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-[#7170ff]" />
             <h1
               className="text-[14px] tracking-[-0.011em] text-[#f7f8f8]"
               style={{ fontWeight: 510 }}
