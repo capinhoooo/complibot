@@ -92,6 +92,7 @@ export async function certifyRoutes(app: FastifyInstance) {
         where: { auditSessionId: body.auditSessionId },
       });
       if (existingCert) {
+        app.log.warn({ auditSessionId: body.auditSessionId, existingUid: existingCert.attestationUid }, 'Duplicate certify attempt');
         return reply.status(409).send({
           error: 'Audit session already certified',
           attestationUid: existingCert.attestationUid,
@@ -120,7 +121,7 @@ export async function certifyRoutes(app: FastifyInstance) {
       // 5. Determine explorer URL based on chain (use centralized config, not raw env var)
       const explorerBase = currentChain.id === 177
         ? 'https://hashkey.blockscout.com'
-        : 'https://testnet-explorer.hsk.xyz';
+        : 'https://testnet.hashkeyscan.io';
 
       // 6. Save certificate to database
       // The unique constraint on auditSessionId is the final guard against race conditions.

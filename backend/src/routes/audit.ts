@@ -119,7 +119,7 @@ export async function auditRoutes(app: FastifyInstance) {
       // 6. Return the auditSessionId AND the report shape the frontend needs.
       // findingsSummary is broken out at the top level so the certify flow
       // can pass it directly into its EIP-712 signature payload.
-      return reply.send({
+      return reply.header('Cache-Control', 'no-store').send({
         auditSessionId: session.id,
         score: report.summary.compliance_score,
         verdict: report.summary.verdict,
