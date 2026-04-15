@@ -689,6 +689,7 @@ function CertifyButton({
       })
 
       // Step 2: POST to backend
+      console.log('[certify] auditSessionId:', report.auditSessionId)
       const result = await postCertify({
         contractAddress,
         developerAddress: walletAddress,
