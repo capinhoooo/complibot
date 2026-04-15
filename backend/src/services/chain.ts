@@ -177,11 +177,17 @@ export async function createAttestation(input: AttestationInput): Promise<Attest
   const txHash = await walletClient.writeContract(request);
   const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });
 
-  // Extract attestation UID from the Attested event log
+  // Extract attestation UID from the Attested event log.
+  // EAS Attested event: Attested(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schemaId)
+  // topics[0] = event signature, topics[1] = recipient, topics[2] = attester, topics[3] = schemaId
+  // The uid (bytes32, non-indexed) is in the log data, not topics.
   const attestedLog = receipt.logs.find(
     (log) => log.address.toLowerCase() === EAS_ADDRESS.toLowerCase()
   );
-  const uid = attestedLog?.topics?.[1] ?? txHash;
+  // The UID is the first 32 bytes of the log data (non-indexed bytes32 field)
+  const uid = attestedLog?.data
+    ? (attestedLog.data.slice(0, 66) as `0x${string}`)
+    : txHash;
 
   return { uid, txHash, schemaUid };
 }
