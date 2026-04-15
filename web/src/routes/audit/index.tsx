@@ -660,10 +660,11 @@ function CertifyButton({
   onSuccess: (certUrl: string) => void
 }) {
   const [isCertifying, setIsCertifying] = useState(false)
+  const [certified, setCertified] = useState(false)
   const { signTypedDataAsync } = useSignTypedData()
 
   async function handleCertify() {
-    if (isCertifying) return
+    if (isCertifying || certified) return
     setIsCertifying(true)
 
     try {
@@ -708,14 +709,16 @@ function CertifyButton({
 
       onSuccess(result.certificateUrl)
     } catch (err) {
-      // Never log the full error (may contain headers with auth tokens)
-      const msg =
-        err instanceof ApiError
+      const isConflict = err instanceof ApiError && err.status === 409
+      const msg = isConflict
+        ? 'This audit was already certified. Run a new audit to certify again.'
+        : err instanceof ApiError
           ? err.message
           : err instanceof Error
             ? err.message
             : 'Certification failed'
       addToast({ title: 'Certification failed', description: msg, color: 'danger' })
+      if (isConflict) setCertified(true)
     } finally {
       setIsCertifying(false)
     }
@@ -724,12 +727,12 @@ function CertifyButton({
   return (
     <Button
       onPress={handleCertify}
-      isDisabled={isCertifying}
+      isDisabled={isCertifying || certified}
       isLoading={isCertifying}
       spinner={<Loader2 className="h-4 w-4 animate-spin" />}
-      className="w-full bg-[#5e6ad2] text-[14px] font-medium text-white"
+      className={cnm("w-full text-[14px] font-medium text-white", certified ? "bg-[#10b981]" : "bg-[#5e6ad2]")}
     >
-      {isCertifying ? 'Signing…' : 'Issue Certificate'}
+      {certified ? 'Already Certified' : isCertifying ? 'Signing…' : 'Issue Certificate'}
     </Button>
   )
 }
